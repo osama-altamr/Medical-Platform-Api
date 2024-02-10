@@ -6,7 +6,7 @@ import {
   IsStrongPassword,
   Min,
 } from 'class-validator';
-import { Specializations, UserRoles } from '../schemas/user.schema';
+import { UserRoles } from '../schemas/user.schema';
 
 export class CreateUserDto {
   @IsString()
@@ -26,6 +26,4 @@ export class CreateUserDto {
   readonly avatar: string;
   @IsEnum(UserRoles)
   readonly role: UserRoles;
-  @IsEnum(Specializations,{message:'Please enter correct Specialization '})
-  readonly specialization?: Specializations;
 }

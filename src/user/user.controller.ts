@@ -32,7 +32,6 @@ export class UserController {
     @CurrentUser() user: User,
     @Query() query: ExpressQuery,
   ): Promise<User[]> {
-    console.log('Query', query);
     return this.userService.findAll(query);
   }
   @Post()

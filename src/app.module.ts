@@ -6,6 +6,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
+import { ClinicModule } from './clinic/clinic.module';
+import { CenterModule } from './center/center.module';
+import { DoctorModule } from './doctor/doctor.module';
 
 @Module({
   imports: [
@@ -17,6 +20,9 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule.register({ session: true }),
     UserModule,
     AuthModule,
+    ClinicModule,
+    CenterModule,
+    DoctorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

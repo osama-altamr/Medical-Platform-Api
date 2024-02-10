@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {Document} from 'mongoose'
 import * as bcrypt from 'bcryptjs';
 export enum UserRoles {
   USER = 'user',
@@ -8,15 +9,12 @@ export enum UserRoles {
   ADMIN = 'admin',
   SUBADMIN = 'subadmin',
   SUBMANAGER = 'submanager',
-  DOCTOR = 'doctor',
+  EMPLOYEE = 'employee',
 }
-export enum Specializations {
-  NONE = 'none',
-  GENREAL = 'general',
-}
+
 @Schema({
   timestamps: true,
-  minimize:false,
+  minimize: false,
   toJSON: {
     transform: (doc, ret) => {
       ret.id = doc._id;
@@ -24,7 +22,7 @@ export enum Specializations {
     },
   },
 })
-export class User {
+export class User  extends Document  {
   @Prop()
   name: string;
 
@@ -38,10 +36,9 @@ export class User {
   password: string;
   @Prop()
   verifyToken: string;
-
   @Prop({ select: false, type: Date })
   passwordChangedAt: Date;
-  
+
   @Prop({ default: 'default.jpg' })
   avatar: string;
 
@@ -63,15 +60,6 @@ export class User {
 
   @Prop({ enum: UserRoles, default: UserRoles.USER })
   role: UserRoles;
-
-  @Prop({
-    required: function () {
-      return this.role === UserRoles.DOCTOR;
-    },
-    enum: Specializations,
-    default: Specializations.NONE,
-  })
-  specialization?: Specializations;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

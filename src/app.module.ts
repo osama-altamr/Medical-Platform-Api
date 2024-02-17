@@ -9,6 +9,8 @@ import { PassportModule } from '@nestjs/passport';
 import { ClinicModule } from './clinic/clinic.module';
 import { CenterModule } from './center/center.module';
 import { DoctorModule } from './doctor/doctor.module';
+import { MedicalRecordModule } from './medical-record/medical-record.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { DoctorModule } from './doctor/doctor.module';
     ClinicModule,
     CenterModule,
     DoctorModule,
+    MedicalRecordModule,
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

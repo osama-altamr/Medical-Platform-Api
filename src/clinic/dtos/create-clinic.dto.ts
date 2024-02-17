@@ -1,4 +1,4 @@
-import { IsArray, IsBoolean, IsDate, IsEmail, IsPhoneNumber, IsString } from "class-validator";
+import { IsArray, IsBoolean, IsDate, IsEmail, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 
 export class CreateClinicDto {
    @IsString()
@@ -9,8 +9,6 @@ export class CreateClinicDto {
     readonly phoneNumber:string
     @IsEmail()
     readonly  email:string
-    @IsDate()
-    readonly foundedDate: Date;
     @IsArray()
     @IsString({ each: true })
     readonly doctors:object[]
@@ -18,5 +16,6 @@ export class CreateClinicDto {
     @IsString({ each: true })
     readonly employees:object[]
     @IsBoolean()
+    @IsOptional()
     readonly accepted: boolean;   
 }

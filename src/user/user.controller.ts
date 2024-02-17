@@ -22,6 +22,9 @@ import { Query as ExpressQuery } from 'express-serve-static-core';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { Filtering, FilteringParams } from 'src/shared/decorators/filtering.decorator';
+import { Pagination, PaginationParams } from 'src/shared/decorators/pagination.decorator';
+import { Sorting, SortingParams } from 'src/shared/decorators/sorting.decorator';
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
@@ -30,9 +33,11 @@ export class UserController {
   // @Roles('user')
   async getAllUsers(
     @CurrentUser() user: User,
-    @Query() query: ExpressQuery,
+    @PaginationParams() paginationParams?: Pagination,
+    @SortingParams(['name']) sortingParams?: Sorting[],
+    @FilteringParams(['age',"phoneNumber"]) filteringParams?: Filtering[],
   ): Promise<User[]> {
-    return this.userService.findAll(query);
+    return this.userService.findAll(paginationParams,sortingParams,filteringParams);
   }
   @Post()
   async createUser() {

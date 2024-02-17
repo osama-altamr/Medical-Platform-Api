@@ -4,7 +4,7 @@ import { UpdateClinicDto } from './dtos/update-clinic.dto';
 import { ClinicService } from './clinic.service';
 import { CreateClinicDto } from './dtos/create-clinic.dto';
 
-@Controller('clinic')
+@Controller('clinics')
 export class ClinicController {
     constructor(
         private clinicService :ClinicService
@@ -23,13 +23,13 @@ export class ClinicController {
     }
     @Get(":id")
     async getClinic(
-    @Param("id") id : string 
+    @Param("id") id:string,
     ):Promise<Clinic>{
         return this.clinicService.findById(id);
     }
     @Put(":id")
     async updateClinic(
-        @Param("id") id : string ,
+        @Param("id") id :string,
         @Body() updateClinicDto:UpdateClinicDto
     ):Promise<Clinic>{
         return this.clinicService.updateById(id,updateClinicDto);
@@ -37,7 +37,7 @@ export class ClinicController {
 
     @Delete(":id")
     async deleteClinic(
-        @Param("id")  id :string
+        @Param("id") id:string
     ):Promise<{deleted:boolean}>{
         return this.clinicService.deleteById(id)
     }

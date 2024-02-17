@@ -4,6 +4,7 @@ import {Model} from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { UpdateDoctorDto } from './dtos/update-doctor.dto';
 import { CreateDoctorDto } from './dtos/create-doctor.dto';
+import { Query } from 'express-serve-static-core';
 
 @Injectable()
 export class DoctorService {

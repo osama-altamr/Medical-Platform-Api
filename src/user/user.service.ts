@@ -12,43 +12,24 @@ import mongoose, { Model } from 'mongoose';
 import { Query } from 'express-serve-static-core';
 import * as bcrypt from 'bcryptjs';
 import * as fs from 'fs';
+import { Pagination } from 'src/shared/decorators/pagination.decorator';
+import { Sorting } from 'src/shared/decorators/sorting.decorator';
+import { Filtering } from 'src/shared/decorators/filtering.decorator';
+import { createFilteringObject, createSortingObject } from 'src/shared/helpers/mongoose-query-helpers';
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
-  async findAll(query: Query): Promise<User[]> {
-    let keyword = {};
-    if (!query.page) {
-      keyword = query;
-    }
-    const resPerPage = 2;
-    const currentPage = Number(query.page) || 1;
-    const skip = resPerPage * (currentPage - 1);
-
-    // const keyword = query.keyword
-    //   ? {
-    //       name: {
-    //         $regex: query.keyword,
-    //         $options: 'i',
-    //       },
-    //     }
-    //   : {};
+  constructor(@InjectModel(User.name) private userModel: Model<User>) { }
+  async findAll(paginationParams: Pagination, sortingParams: Sorting[],filteringParams:Filtering[]): Promise<User[]> {   
     return await this.userModel
-      .find({ ...keyword })
-      .limit(resPerPage)
-      .skip(skip);
+      .find(createFilteringObject(filteringParams))
+      .limit(paginationParams.size)
+      .skip(paginationParams.offset).sort({...createSortingObject(sortingParams)});
   }
 
   async create(user) {
-    try {
-      user.password = await bcrypt.hash(user.password, 10);
-      const userRepo = await this.userModel.create(user);
-      return userRepo;
-    } catch (err) {
-      // Handle Duplicate Email
-      if (err.code == 11000) {
-        throw new ConflictException('Email already exists');
-      }
-    }
+    user.password = await bcrypt.hash(user.password, 10);
+    const userRepo = await this.userModel.create(user);
+    return userRepo;
   }
 
   async findById(id: string): Promise<User> {

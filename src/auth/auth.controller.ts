@@ -26,7 +26,6 @@ import { FacebookAuthGuard } from './guards/facebook-auth.guard';
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private userService: UserService,
   ) {}
   @UseGuards(LocalAuthGuard)
   @Post('login')

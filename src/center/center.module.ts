@@ -6,7 +6,9 @@ import { Center, CenterSchema } from './schemas/center.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Center.name, schema: CenterSchema }]),
+    MongooseModule.forFeature([
+      { name: Center.name, schema: CenterSchema },
+    ]),
   ],
   providers: [CenterService],
   controllers: [CenterController],

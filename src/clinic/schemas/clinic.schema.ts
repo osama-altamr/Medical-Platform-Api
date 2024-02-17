@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose,{Document} from "mongoose";
+import { Doctor } from "src/doctor/schemas/doctor.schema";
+import { User } from "src/user/schemas/user.schema";
 
 @Schema()
 export class Clinic extends Document {
@@ -11,12 +13,10 @@ specialization:string;
 phoneNumber:string
 @Prop()
 email:string
-@Prop({ default: Date.now })
-foundedDate: Date;
 @Prop({type:[{type:mongoose.Schema.Types.ObjectId,ref:"Doctor"}]})
-doctors:object[]
+doctors:Doctor[]
 @Prop({type:[{type:mongoose.Schema.Types.ObjectId,ref:"User"}]})
-employees:object[]
+employees:User[]
 @Prop({ default: false })
 accepted: boolean;
 }

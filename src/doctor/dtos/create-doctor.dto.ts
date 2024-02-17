@@ -1,6 +1,7 @@
-import { IsArray, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from "class-validator";
+import { IsArray, IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString } from "class-validator";
 import { DoctorSpecializations } from "../schemas/doctor.schema";
 import { Clinic } from "src/clinic/schemas/clinic.schema";
+import { Center } from "src/center/schemas/center.schema";
 
 
 export class CreateDoctorDto{
@@ -8,7 +9,7 @@ export class CreateDoctorDto{
 readonly    name:string ;
    
   @IsEnum(DoctorSpecializations)
-     specialization:DoctorSpecializations
+   specialization:DoctorSpecializations
     @IsNumber()
     yearsOfExperience:number;
     @IsEmail()
@@ -17,9 +18,12 @@ readonly    name:string ;
     contactPhoneNumber:string
     @IsArray()
     @IsString({ each: true })
-    centers :object []
-    @IsString()
-    @IsNotEmpty()
-    clinic :Clinic; 
+    centers :Center[]
+    @IsBoolean() 
+    active:boolean
+    @IsArray()
+    @IsOptional()
+    @IsString({ each: true })
+    clinic?:Clinic[]; 
   
 }

@@ -6,16 +6,17 @@ import { User } from "src/user/schemas/user.schema";
 
 
 
-export enum PatientGender  {
-    MALE='male',
-    FEMALE='female'
+export enum PatientGender {
+    MALE = 'male',
+    FEMALE = 'female',
+    ENGINEER = "engineer"
 }
 
 @Schema()
 export class MedicalRecord extends Document {
-    @Prop({type:mongoose.Schema.Types.ObjectId,ref:"User"})
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User" })
     patient: User
-    @Prop({type:mongoose.Schema.Types.ObjectId,ref:"User"})
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User" })
     employer: User;
     @Prop()
     medicalHistory: string;
@@ -37,20 +38,17 @@ export class MedicalRecord extends Document {
     weight: number;
     @Prop()
     age: number;
-    @Prop({enum:PatientGender})
+    @Prop({ enum: PatientGender })
     gender: PatientGender;
     @Prop()
     maritalStatus: string;
-
     @Prop()
     contactNumber: string;
-
     @Prop()
     smokingStatus: boolean;
-
     @Prop()
     alcoholConsumption: boolean;
 }
 
 
-export const MedicalRecordSchema=SchemaFactory.createForClass(MedicalRecord);
+export const MedicalRecordSchema = SchemaFactory.createForClass(MedicalRecord);

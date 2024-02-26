@@ -35,7 +35,7 @@ export class UserController {
     @CurrentUser() user: User,
     @PaginationParams() paginationParams?: Pagination,
     @SortingParams(['name']) sortingParams?: Sorting[],
-    @FilteringParams(['age',"phoneNumber"]) filteringParams?: Filtering[],
+    @FilteringParams(['age',"name","role"]) filteringParams?: Filtering[],
   ): Promise<User[]> {
     return this.userService.findAll(paginationParams,sortingParams,filteringParams);
   }

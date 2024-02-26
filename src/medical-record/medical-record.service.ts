@@ -8,12 +8,15 @@ import { UpdateMedicalRecordDto } from './dtos/update-medical-record.dto';
 @Injectable()
 export class MedicalRecordService {
     constructor(
-        @InjectModel(MedicalRecord.name) private medicalRecordModel: Model<MedicalRecord>
+        @InjectModel(MedicalRecord.name) readonly medicalRecordModel: Model<MedicalRecord>
+
     ) { }
     async findAll(): Promise<MedicalRecord[]> {
         return await this.medicalRecordModel.find();
     }
-
+    async findByPatient(patient: string): Promise<MedicalRecord> {
+        return await this.medicalRecordModel.findOne({ patient });
+    }
     async findById(id: string): Promise<MedicalRecord> {
         return await this.medicalRecordModel.findById(id);
     }
@@ -29,9 +32,9 @@ export class MedicalRecordService {
         });
     }
     async deleteById(id: string): Promise<{ deleted: boolean }> {
-        const res =  await this.medicalRecordModel.findByIdAndDelete(id);
-        if(!res) return {deleted : false};
-        return { deleted:true } ;
+        const res = await this.medicalRecordModel.findByIdAndDelete(id);
+        if (!res) return { deleted: false };
+        return { deleted: true };
     }
 
 

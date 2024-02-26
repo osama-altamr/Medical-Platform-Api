@@ -4,6 +4,10 @@ import { Clinic } from './schemas/clinic.schema';
 import { UpdateClinicDto } from './dtos/update-clinic.dto';
 import { CreateClinicDto } from './dtos/create-clinic.dto';
 import { InjectModel } from '@nestjs/mongoose';
+import { createFilteringObject, createSortingObject } from 'src/shared/helpers/mongoose-query-helpers';
+import { Pagination } from 'src/shared/decorators/pagination.decorator';
+import { Sorting } from 'src/shared/decorators/sorting.decorator';
+import { Filtering } from 'src/shared/decorators/filtering.decorator';
 
 @Injectable()
 export class ClinicService {
@@ -12,8 +16,10 @@ export class ClinicService {
        ){}
 
 
-   async findAll():Promise<Clinic[]>{
-        return this.clinicModel.find();
+   async findAll(paginationParams: Pagination, sortingParams: Sorting[],filteringParams:Filtering[]):Promise<Clinic[]>{
+        return this.clinicModel.find(createFilteringObject(filteringParams))
+        .limit(paginationParams.size)
+        .skip(paginationParams.offset).sort({...createSortingObject(sortingParams)});
     }
     async findById(id:string): Promise<Clinic>{
         return this.clinicModel.findById(id);   

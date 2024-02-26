@@ -11,6 +11,11 @@ import { CenterModule } from './center/center.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { MedicalRecordModule } from './medical-record/medical-record.module';
 import { SharedModule } from './shared/shared.module';
+import { DayModule } from './day/day.module';
+import { ReservationModule } from './reservation/reservation.module';
+import { ReviewModule } from './review/review.module';
+import { ComplaintModule } from './complaint/complaint.module';
+import { MedicalExaminationModule } from './medical-examination/medical-examination.module';
 
 @Module({
   imports: [
@@ -27,8 +32,13 @@ import { SharedModule } from './shared/shared.module';
     DoctorModule,
     MedicalRecordModule,
     SharedModule,
+    ReservationModule,
+    DayModule,
+    ReviewModule,
+    ComplaintModule,
+    MedicalExaminationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

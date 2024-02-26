@@ -25,5 +25,8 @@ readonly    name:string ;
     @IsOptional()
     @IsString({ each: true })
     clinic?:Clinic[]; 
+
+
+    
   
 }

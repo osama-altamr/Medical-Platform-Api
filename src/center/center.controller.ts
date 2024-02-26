@@ -11,13 +11,22 @@ import { Center } from './schemas/center.schema';
 import { CenterService } from './center.service';
 import { UpdateCenterDto } from './dtos/update-center.dto';
 import { CreateCenterDto } from './dtos/create-center.dto';
+import { Pagination, PaginationParams } from 'src/shared/decorators/pagination.decorator';
+import { Sorting, SortingParams } from 'src/shared/decorators/sorting.decorator';
+import { Filtering, FilteringParams } from 'src/shared/decorators/filtering.decorator';
 
 @Controller('centers')
 export class CenterController {
   constructor(private readonly centerService: CenterService) { }
   @Get()
-  async getAllCenters(): Promise<Array<Center>> {
-    return await this.centerService.findAll();
+  async getAllCenters(
+    @PaginationParams() paginationParams? : Pagination ,
+    @SortingParams(['name']) sortingParams?: Sorting[],
+    @FilteringParams(["name"]) filteringParams?: Filtering[],
+  ): Promise<Array<Center>> {
+    return await this.centerService.findAll(
+      paginationParams,sortingParams,filteringParams
+    );
   }
   @Get(":id")
   async getCenter(@Param() params): Promise<Center> {

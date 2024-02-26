@@ -25,7 +25,7 @@ async function bootstrap() {
 
   app.use(passport.initialize());
   app.use(passport.session());
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({whitelist:true ,forbidNonWhitelisted:false}));
   app.useGlobalFilters(new MongoExceptionFilter());
   app.useGlobalFilters(new CastErrorFilter());
   await app.listen(3000);

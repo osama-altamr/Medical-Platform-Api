@@ -3,6 +3,9 @@ import { Clinic } from './schemas/clinic.schema';
 import { UpdateClinicDto } from './dtos/update-clinic.dto';
 import { ClinicService } from './clinic.service';
 import { CreateClinicDto } from './dtos/create-clinic.dto';
+import { Pagination, PaginationParams } from 'src/shared/decorators/pagination.decorator';
+import { Sorting, SortingParams } from 'src/shared/decorators/sorting.decorator';
+import { Filtering, FilteringParams } from 'src/shared/decorators/filtering.decorator';
 
 @Controller('clinics')
 export class ClinicController {
@@ -18,8 +21,14 @@ export class ClinicController {
     }
 
     @Get()
-    async getClinics():Promise<Clinic []>{
-        return  this.clinicService.findAll() ;
+    async getClinics(
+        @PaginationParams() paginationParams? : Pagination ,
+        @SortingParams(['name']) sortingParams?: Sorting[],
+        @FilteringParams(["name"]) filteringParams?: Filtering[],
+    ):Promise<Clinic []>{
+        return  this.clinicService.findAll(
+            paginationParams,sortingParams,filteringParams
+        ) ;
     }
     @Get(":id")
     async getClinic(

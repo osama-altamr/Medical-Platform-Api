@@ -3,6 +3,9 @@ import { Doctor } from './schemas/doctor.schema';
 import { DoctorService } from './doctor.service';
 import { UpdateDoctorDto } from './dtos/update-doctor.dto';
 import { CreateDoctorDto } from './dtos/create-doctor.dto';
+import { Pagination, PaginationParams } from 'src/shared/decorators/pagination.decorator';
+import { Sorting, SortingParams } from 'src/shared/decorators/sorting.decorator';
+import { Filtering, FilteringParams } from 'src/shared/decorators/filtering.decorator';
 
 @Controller('doctors')
 export class DoctorController {
@@ -10,8 +13,14 @@ export class DoctorController {
     }   
 
    @Get()
-   async getDoctors(): Promise<Doctor[]>{
-    return this.doctorService.findAll() ;
+   async getDoctors(
+    @PaginationParams() paginationParams? : Pagination ,
+    @SortingParams(['name','yearsOfExperience']) sortingParams?: Sorting[],
+    @FilteringParams(["name"]) filteringParams?: Filtering[],
+   ): Promise<Doctor[]>{
+    return this.doctorService.findAll(
+    paginationParams,sortingParams,filteringParams
+    ) ;
    }
 
    @Post()

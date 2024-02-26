@@ -29,9 +29,19 @@ export class Doctor extends Document {
   contactPhoneNumber: string
   @Prop({ type: [{ type: DoctorAvailability }] })
   availability: DoctorAvailability[]
-  @Prop({ type: [{ type:  mongoose.Schema.Types.ObjectId, ref: "Center" }] })
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Center" }] })
   centers: Center[]
-  @Prop({ type: [{ type:  mongoose.Schema.Types.ObjectId, ref: "Clinic" }] })
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Clinic" }] })
   clinics: Clinic[];
+  @Prop({ default: 0, type: Number })
+  likes: number;
+  @Prop({ default: 0, type: Number })
+  dislikes: number;
+  @Prop({ default: 0, type: Number })
+  ratingsAverage: number;
+  @Prop({ default: 0, type: Number })
+  ratingsQuantity: number;
+  @Prop({ default: false, type: Boolean })
+  isRecommended: boolean;
 }
 export const DoctorSchema = SchemaFactory.createForClass(Doctor)

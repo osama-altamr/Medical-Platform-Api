@@ -5,14 +5,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MedicalRecord, MedicalRecordSchema } from './schemas/medical-record.schema';
 
 @Module({
-  imports:[
+  imports: [
     MongooseModule.forFeature([
-    {
-      name:MedicalRecord.name,
-      schema:MedicalRecordSchema
-    }
-  ])],
+      {
+        name: MedicalRecord.name,
+        schema: MedicalRecordSchema
+      }
+    ])],
   controllers: [MedicalRecordController],
-  providers: [MedicalRecordService]
+  providers: [MedicalRecordService],
+  exports: [MedicalRecordService]
 })
-export class MedicalRecordModule {}
+export class MedicalRecordModule { }

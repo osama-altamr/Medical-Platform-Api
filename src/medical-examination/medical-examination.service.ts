@@ -38,5 +38,11 @@ export class MedicalExaminationService {
         if (!res) return { deleted: false };
         return { deleted: true };
     }
-    async uploadAttachments(): Promise<MedicalExamination> { return }
+    async uploadAttachments(id: string, files: Express.Multer.File[]): Promise<MedicalExamination> {
+        const medExm = await this.medicalExaminationModel.findById(id);
+        files.forEach((file) => {
+            medExm.attachments.push(file.path);
+        })
+        return await medExm.save();
+    }
 }

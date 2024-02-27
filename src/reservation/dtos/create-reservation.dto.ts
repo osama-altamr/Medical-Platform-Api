@@ -4,7 +4,7 @@ import { Clinic } from "src/clinic/schemas/clinic.schema"
 import { Day } from "src/day/schemas/day.schema"
 import { TimeSlotDto } from "src/shared/dtos/time-slot.dto"
 import { User } from "src/user/schemas/user.schema"
-import { ReservationStatus } from "../schemas/reservation.schema"
+import { ReservationStatus } from "../enums/reservation-status.enum"
 
 
 

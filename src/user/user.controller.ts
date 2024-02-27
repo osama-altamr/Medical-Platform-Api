@@ -68,7 +68,7 @@ export class UserController {
   @UseInterceptors(
     FileInterceptor('photo', {
       storage: diskStorage({
-        destination: './public',
+        destination: './public/users',
         filename: (req, file, cb) => {
           const avatar = `${req.user['_id']}_${req.user['name']}_${extname(
             file.originalname,

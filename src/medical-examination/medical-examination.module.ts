@@ -18,5 +18,4 @@ import { ReservationModule } from 'src/reservation/reservation.module';
     providers: [MedicalExaminationService]
 })
 export class MedicalExaminationModule {
-
 }

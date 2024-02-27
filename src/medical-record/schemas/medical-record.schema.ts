@@ -3,14 +3,11 @@ import exp from "constants";
 import mongoose, { Document, mongo } from "mongoose";
 import { Doctor } from "src/doctor/schemas/doctor.schema";
 import { User } from "src/user/schemas/user.schema";
+import { PatientGender } from "../enums/patient-gender.enum";
 
 
 
-export enum PatientGender {
-    MALE = 'male',
-    FEMALE = 'female',
-    ENGINEER = "engineer"
-}
+
 
 @Schema()
 export class MedicalRecord extends Document {

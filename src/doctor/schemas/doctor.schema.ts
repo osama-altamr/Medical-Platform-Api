@@ -3,16 +3,9 @@ import mongoose, { Document } from "mongoose";
 import { Center } from "src/center/schemas/center.schema";
 import { Clinic } from "src/clinic/schemas/clinic.schema";
 import { DoctorAvailability } from "./doctor-availability.schema";
+import { DoctorSpecializations } from "../enums/doctor-specializations.enum";
 
-export enum DoctorSpecializations {
-  NONE = 'none',
-  CARDIOLOGIST = 'Cardiologist',
-  NEUROLOGIST = 'Neurologist',
-  ONCOLOGIST = 'Oncologist',
-  PEDIATRICIAN = 'Pediatrician',
-  PSYCHIATRIST = 'Psychiatrist',
-  SURGEON = 'Surgeon',
-}
+
 @Schema()
 export class Doctor extends Document {
   @Prop()

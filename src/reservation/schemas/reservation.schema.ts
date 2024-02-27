@@ -3,15 +3,10 @@ import mongoose, { Document } from "mongoose";
 import { Clinic } from "src/clinic/schemas/clinic.schema";
 import { Day } from "src/day/schemas/day.schema";
 import { User } from "src/user/schemas/user.schema";
+import { ReservationStatus } from "../enums/reservation-status.enum";
 
 
 
-export enum ReservationStatus {
-    PENDING = 'pending',
-    CONFIRMED = 'confirmed',
-    CANCELLED = 'cancelled',
-    DELAYED = 'delayed',
-}
 
 
 @Schema({

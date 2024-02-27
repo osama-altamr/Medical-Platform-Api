@@ -1,16 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import {Document} from 'mongoose'
+import { Document } from 'mongoose'
 import * as bcrypt from 'bcryptjs';
-export enum UserRoles {
-  USER = 'user',
-  GUEST = 'guest',
-  PATIENT = 'patient',
-  MANAGER = 'manager',
-  ADMIN = 'admin',
-  SUBADMIN = 'subadmin',
-  SUBMANAGER = 'submanager',
-  EMPLOYEE = 'employee',
-}
+import { UserRoles } from '../enums/user-roles.enum';
+
 
 @Schema({
   timestamps: true,
@@ -22,7 +14,7 @@ export enum UserRoles {
     },
   },
 })
-export class User  extends Document  {
+export class User extends Document {
   @Prop()
   name: string;
 

@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
@@ -38,7 +36,5 @@ import { MedicalExaminationModule } from './medical-examination/medical-examinat
     ComplaintModule,
     MedicalExaminationModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule { }

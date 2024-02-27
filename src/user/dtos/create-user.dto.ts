@@ -6,7 +6,7 @@ import {
   IsStrongPassword,
   Min,
 } from 'class-validator';
-import { UserRoles } from '../schemas/user.schema';
+import { UserRoles } from '../enums/user-roles.enum';
 
 export class CreateUserDto {
   @IsString()

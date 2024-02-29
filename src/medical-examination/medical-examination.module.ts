@@ -16,6 +16,7 @@ import { ReservationModule } from 'src/reservation/reservation.module';
     ],
     controllers: [MedicalExaminationController],
     providers: [MedicalExaminationService]
+    , exports: [MedicalExaminationService]
 })
 export class MedicalExaminationModule {
 }

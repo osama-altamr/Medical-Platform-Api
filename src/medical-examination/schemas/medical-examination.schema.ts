@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document, Mongoose, mongo } from "mongoose";
 import { Doctor } from "src/doctor/schemas/doctor.schema";
 import { MedicalRecord } from "src/medical-record/schemas/medical-record.schema";
+import { Payment } from "src/payment/schemas/payment.schema";
 import { User } from "src/user/schemas/user.schema";
 
 
@@ -24,8 +25,8 @@ export class MedicalExamination extends Document {
     followUpDate: string
     @Prop({})
     attachments: Object[]
-    // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Payment" })
-    // payment: Payment
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Payment" })
+    payment: Payment
 }
 
 

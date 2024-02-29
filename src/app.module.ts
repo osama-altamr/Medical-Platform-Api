@@ -14,6 +14,7 @@ import { ReservationModule } from './reservation/reservation.module';
 import { ReviewModule } from './review/review.module';
 import { ComplaintModule } from './complaint/complaint.module';
 import { MedicalExaminationModule } from './medical-examination/medical-examination.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { MedicalExaminationModule } from './medical-examination/medical-examinat
     ReviewModule,
     ComplaintModule,
     MedicalExaminationModule,
+    PaymentModule,
   ],
 })
 export class AppModule { }

@@ -28,7 +28,7 @@ export class SocketClientService implements OnModuleInit {
             console.log("Connected to Gateway")
         })
         this.socketClient.on('getOnlineUsers', (onlineUsers: any) => {
-            console.log("Online Users ONNNNN-------------")
+            // console.log("Online Users ONNNNN-------------")
             console.log("OnlineUsers", onlineUsers)
         })
         // this.socketClient.emit('message', chat);

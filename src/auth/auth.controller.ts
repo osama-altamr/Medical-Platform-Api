@@ -21,12 +21,15 @@ import { GoogleAuthGuard } from './guards/google-auth.guard';
 import { authenticator } from 'otplib';
 import { AuthGuard } from '@nestjs/passport';
 import { FacebookAuthGuard } from './guards/facebook-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
-  ) {}
+  ) { }
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
@@ -67,7 +70,7 @@ export class AuthController {
         console.log(isEmailSent);
       } else {
       }
-    } catch (err) {}
+    } catch (err) { }
   }
   @Patch(':email/reset-password/:passwordResetToken')
   async setNewPassword(
@@ -106,5 +109,5 @@ export class AuthController {
   @Get('facebook/redirect')
   async handlewLogin(@Req() req) {
     console.log(req.user);
-  } 
+  }
 }

@@ -15,6 +15,11 @@ import { ReviewModule } from './review/review.module';
 import { ComplaintModule } from './complaint/complaint.module';
 import { MedicalExaminationModule } from './medical-examination/medical-examination.module';
 import { PaymentModule } from './payment/payment.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { SocketClientModule } from './socket-client/socket-client.module';
+import { ChatMessageModule } from './chat-message/chat-message.module';
+import { ConversationModule } from './conversation/conversation.module';
 
 @Module({
   imports: [
@@ -22,6 +27,11 @@ import { PaymentModule } from './payment/payment.module';
       envFilePath: `config/.env.${process.env.NODE_ENV}`,
       isGlobal: true,
     }),
+    // ServeStaticModule.forRoot(
+    //   {
+    //     rootPath: join(`${__dirname}`,"..", '../static')
+    //   }
+    // ),
     MongooseModule.forRoot(process.env.DB_URI_LOCAL),
     PassportModule.register({ session: true }),
     UserModule,
@@ -37,6 +47,10 @@ import { PaymentModule } from './payment/payment.module';
     ComplaintModule,
     MedicalExaminationModule,
     PaymentModule,
+    SocketClientModule,
+    ChatMessageModule,
+    ConversationModule,
+    
   ],
 })
 export class AppModule { }

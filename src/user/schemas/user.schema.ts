@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose'
+import { Document, Types } from 'mongoose'
 import * as bcrypt from 'bcryptjs';
 import { UserRoles } from '../enums/user-roles.enum';
+import { ChatMessage } from 'src/chat-message/schemas/chat-message.schema';
 
 
 @Schema({

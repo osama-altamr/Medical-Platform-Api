@@ -12,6 +12,7 @@ export class MongoExceptionFilter implements ExceptionFilter {
   catch(exception: MongoError , host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
+    console.log("Mongo Error")
     switch (exception.code) {
         case 11000:
           response.status(HttpStatus.BAD_REQUEST).json({

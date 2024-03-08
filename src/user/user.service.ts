@@ -19,11 +19,11 @@ import { createFilteringObject, createSortingObject } from 'src/shared/helpers/m
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) { }
-  async findAll(paginationParams: Pagination, sortingParams: Sorting[],filteringParams:Filtering[]): Promise<User[]> {   
+  async findAll(paginationParams: Pagination, sortingParams: Sorting[], filteringParams: Filtering[]): Promise<User[]> {
     return await this.userModel
       .find(createFilteringObject(filteringParams))
       .limit(paginationParams.size)
-      .skip(paginationParams.offset).sort({...createSortingObject(sortingParams)});
+      .skip(paginationParams.offset).sort({ ...createSortingObject(sortingParams) });
   }
 
   async create(user) {

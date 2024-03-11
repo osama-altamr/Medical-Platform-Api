@@ -12,5 +12,6 @@ import { Center, CenterSchema } from './schemas/center.schema';
   ],
   providers: [CenterService],
   controllers: [CenterController],
+  exports: [CenterService]
 })
-export class CenterModule {}
+export class CenterModule { }

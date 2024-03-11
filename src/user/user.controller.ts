@@ -27,19 +27,18 @@ import { Filtering, FilteringParams } from 'src/shared/decorators/filtering.deco
 import { Pagination, PaginationParams } from 'src/shared/decorators/pagination.decorator';
 import { Sorting, SortingParams } from 'src/shared/decorators/sorting.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dtos/create-user.dto';
 
 
 
-@ApiTags('User')
+@ApiTags('Users')
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) { }
   @Get()
-  // @UseGuards(JwtGuard, RolesGuard)
-  // @Roles('admin', 'subadmin')
-
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles('admin', 'subadmin')
   @ApiQuery({
     name: 'filter',
     description: 'Filter items by specific fields (only "age", "name", and "role" are allowed). Use format: filter=attribute:value',
@@ -47,6 +46,9 @@ export class UserController {
     type: String,
     enum: ['age', 'name', 'role'],
     example: 'age:30'
+  })
+  @ApiOperation({
+    summary: "Get all users"
   })
   @ApiQuery({ name: 'page', description: 'Page number for pagination', required: false, type: Number, example: 1 })
   @ApiQuery({ name: 'limit', description: 'Number of items per page for pagination', required: false, type: Number, example: 10 })
@@ -79,6 +81,9 @@ export class UserController {
       error: String,
     }),
   })
+  @ApiOperation({
+    summary: "Use the signup route instead"
+  })
   async createUser() {
     return new HttpException(
       {
@@ -107,12 +112,18 @@ export class UserController {
     status: 404,
     description: 'User not found',
   })
+  @ApiOperation({ summary: "Get a user by ID" })
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles('admin', 'subadmin', 'user', 'patient')
+
   async getUser(@Param('id') id: string): Promise<User> {
     return this.userService.findById(id);
   }
 
 
   @Patch(':id')
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles('admin', 'subadmin', 'user', 'patient')
   @ApiParam({
     name: 'id',
     description: 'The ID of the user to update',
@@ -133,6 +144,7 @@ export class UserController {
     status: 404,
     description: 'User not found',
   })
+  @ApiOperation({ summary: "Update  a user by ID" })
   async updateUser(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -144,6 +156,8 @@ export class UserController {
 
 
   @Delete(':id')
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles('admin')
   @ApiParam({
     name: 'id',
     description: 'The ID of the user to delete',
@@ -161,13 +175,14 @@ export class UserController {
     status: 404,
     description: 'User not found',
   })
+  @ApiOperation({ summary: "Delete a user by ID" })
   async deleteUser(@Param('id') id: string): Promise<User> {
     await this.userService.findById(id);
     return this.userService.deleteById(id);
   }
 
 
-  
+
   @Patch('upload-photo/:id')
   @UseGuards(JwtGuard, RolesGuard)
   @UseInterceptors(
@@ -183,6 +198,7 @@ export class UserController {
       }),
     }),
   )
+  @ApiOperation({ summary: "upload an avatar image" })
   @ApiBearerAuth()
   @ApiParam({
     name: 'id',
@@ -215,7 +231,7 @@ export class UserController {
     status: 404,
     description: 'User not found',
   })
-
+  @UseGuards(JwtGuard)
   uploadAvatar(
     @Param('id') params: string,
     @CurrentUser() user: User,
@@ -226,9 +242,7 @@ export class UserController {
 
   @Delete('delete-photo/:id')
   @UseGuards(JwtGuard)
-  @ApiBearerAuth(
-    
-  )
+  @ApiBearerAuth()
   @ApiParam({
     name: 'id',
     description: 'The ID of the user to delete the avatar for',
@@ -240,6 +254,9 @@ export class UserController {
     status: 200,
     description: 'The user with the avatar deleted',
     type: User,
+  })
+  @ApiOperation({
+    summary: "Enables a user to delete their avatar."
   })
   deleteAvatar(@Param('id') params: string, @CurrentUser() user: User) {
     return this.userService.deleteAvatar(user['_id'], user.avatar);

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
+import { Center } from "src/center/schemas/center.schema";
 import { Day } from "src/day/schemas/day.schema";
 import { Doctor } from "src/doctor/schemas/doctor.schema";
 import { User } from "src/user/schemas/user.schema";
@@ -14,6 +15,8 @@ export class Clinic extends Document {
     phoneNumber: string
     @Prop()
     isAvailable: Boolean
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Center" })
+    center: Center;
     @Prop()
     email: string
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Doctor" }] })
@@ -24,7 +27,7 @@ export class Clinic extends Document {
     days: Day[]
     @Prop({ default: false })
     accepted: boolean;
-    
+
 }
 
 export const ClinicSchema = SchemaFactory.createForClass(Clinic);

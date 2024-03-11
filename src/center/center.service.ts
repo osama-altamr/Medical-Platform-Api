@@ -36,7 +36,7 @@ export class CenterService {
       .skip(paginationParams.offset).sort({ ...createSortingObject(sortingParams) });
   }
   async findById(id: string): Promise<Center> {
-    return await this.centerModel.findById(id);
+    return await this.centerModel.findById(id).populate('manager','name age bio phoneNumber ');
   }
 
   async getDistance(latlng: any, unit: string) {
@@ -74,5 +74,11 @@ export class CenterService {
       }
     })
     return centers;
+  }
+
+  async updateClinicsInCenter(id: string, clinicId: string) {
+    return await this.centerModel.findByIdAndUpdate(id, {
+      $push: { clinics: clinicId }
+    });
   }
 }

@@ -8,36 +8,38 @@ import { createFilteringObject, createSortingObject } from 'src/shared/helpers/m
 import { Pagination } from 'src/shared/decorators/pagination.decorator';
 import { Sorting } from 'src/shared/decorators/sorting.decorator';
 import { Filtering } from 'src/shared/decorators/filtering.decorator';
+import { CenterService } from 'src/center/center.service';
 
 @Injectable()
 export class ClinicService {
-       constructor(
-        @InjectModel(Clinic.name)  private clinicModel: Model<Clinic>
-       ){}
+    constructor(
+        @InjectModel(Clinic.name) private clinicModel: Model<Clinic>,
+        private readonly centerService: CenterService
+    ) { }
 
 
-   async findAll(paginationParams: Pagination, sortingParams: Sorting[],filteringParams:Filtering[]):Promise<Clinic[]>{
+    async findAll(paginationParams: Pagination, sortingParams: Sorting[], filteringParams: Filtering[]): Promise<Clinic[]> {
         return this.clinicModel.find(createFilteringObject(filteringParams))
-        .limit(paginationParams.size)
-        .skip(paginationParams.offset).sort({...createSortingObject(sortingParams)});
+            .limit(paginationParams.size)
+            .skip(paginationParams.offset).sort({ ...createSortingObject(sortingParams) });
     }
-    async findById(id:string): Promise<Clinic>{
-        return this.clinicModel.findById(id);   
+    async findById(id: string): Promise<Clinic> {
+        return await this.clinicModel.findById(id).populate('center', 'name openingHours');
     }
-    async updateById(id:string, updateClinicDto : UpdateClinicDto){
-        return await this.clinicModel.findByIdAndUpdate(id,updateClinicDto,{
-            runValidators:true,
-            new:true,
-    })
+    async updateById(id: string, updateClinicDto: UpdateClinicDto) {
+        return await this.clinicModel.findByIdAndUpdate(id, updateClinicDto, {
+            runValidators: true,
+            new: true,
+        })
     }
-    async deleteById(id:string): Promise<{deleted:boolean}>{
-        const res =  await this.clinicModel.findByIdAndDelete(id);
-        if(!res) return {deleted : false};
-        return { deleted:true} ;
+    async deleteById(id: string): Promise<{ deleted: boolean }> {
+        const res = await this.clinicModel.findByIdAndDelete(id);
+        if (!res) return { deleted: false };
+        return { deleted: true };
     }
-
-    async create(createClinicDto:CreateClinicDto) {
-          const clinic = await this.clinicModel.create(createClinicDto);
-          return clinic;
+    async create(createClinicDto: CreateClinicDto) {
+        const clinic = await this.clinicModel.create(createClinicDto);
+        this.centerService.updateClinicsInCenter(clinic.center.toString(), clinic._id)
+        return clinic;
     }
-      }
+}

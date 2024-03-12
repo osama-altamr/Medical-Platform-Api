@@ -19,7 +19,10 @@ export class ReviewService {
         return await this.reviewModel.find();
     }
     async findById(id: string): Promise<Review> {
-        return await this.reviewModel.findById(id);
+        return await this.reviewModel.findById(id)
+        .populate('doctor','name')
+        .populate('patien','name')
+        ;
     }
     async create(createReviewDto: CreateReviewDto): Promise<Review> {
         const review = await this.reviewModel.create(createReviewDto)

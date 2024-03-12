@@ -16,7 +16,7 @@ export class Complaint extends Document {
     @Prop()
     resolvedAt: Date
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User" })
-    assigneeId: User // sub admin
+    subadmin: User // sub admin
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User" })
     patient: User  // patient
 }

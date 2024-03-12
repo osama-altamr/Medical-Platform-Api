@@ -22,7 +22,8 @@ export class ComplaintService {
         return await this.complaintModel.find(createFilteringObject(filteringParams));
     }
     async findById(id: string): Promise<Complaint> {
-        return await this.complaintModel.findById(id);
+        return await this.complaintModel.findById(id)
+            .populate('patien', 'name');
     }
     async updateById(id: string, updateComplaintDto: UpdateComplaintDto) {
         return await this.complaintModel.findByIdAndUpdate(id, updateComplaintDto, { runValidators: true, new: true });

@@ -50,6 +50,7 @@ export class UserController {
   @ApiOperation({
     summary: "Get all users"
   })
+  @ApiBearerAuth()
   @ApiQuery({ name: 'page', description: 'Page number for pagination', required: false, type: Number, example: 1 })
   @ApiQuery({ name: 'limit', description: 'Number of items per page for pagination', required: false, type: Number, example: 10 })
   @ApiQuery({
@@ -96,6 +97,8 @@ export class UserController {
 
 
   @Get(':id')
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles('admin', 'subadmin', 'user', 'patient')
   @ApiParam({
     name: 'id',
     description: 'The ID of the user',
@@ -113,9 +116,8 @@ export class UserController {
     description: 'User not found',
   })
   @ApiOperation({ summary: "Get a user by ID" })
-  @UseGuards(JwtGuard, RolesGuard)
-  @Roles('admin', 'subadmin', 'user', 'patient')
 
+  @ApiBearerAuth()
   async getUser(@Param('id') id: string): Promise<User> {
     return this.userService.findById(id);
   }
@@ -124,6 +126,7 @@ export class UserController {
   @Patch(':id')
   @UseGuards(JwtGuard, RolesGuard)
   @Roles('admin', 'subadmin', 'user', 'patient')
+  @ApiBearerAuth()
   @ApiParam({
     name: 'id',
     description: 'The ID of the user to update',
@@ -158,6 +161,7 @@ export class UserController {
   @Delete(':id')
   @UseGuards(JwtGuard, RolesGuard)
   @Roles('admin')
+  @ApiBearerAuth()
   @ApiParam({
     name: 'id',
     description: 'The ID of the user to delete',

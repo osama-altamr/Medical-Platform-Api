@@ -39,8 +39,10 @@ export class ClinicController {
 
 
     @Get()
-    @ApiOperation({ summary: 'Get all clinics' })
 
+    @UseGuards(JwtGuard)
+    @ApiOperation({ summary: 'Get all clinics' })
+    @ApiBearerAuth()
     @ApiQuery({ name: 'page', required: false, description: 'Page number for pagination' })
     @ApiQuery({ name: 'limit', required: false, description: 'Number of items per page for pagination' })
     @ApiQuery({ name: 'sort', required: false, description: 'Sorting field and order, only "name" is supported', type: String })

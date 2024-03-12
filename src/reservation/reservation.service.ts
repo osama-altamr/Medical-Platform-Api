@@ -50,7 +50,10 @@ export class ReservationService {
     }
 
     async findById(id: string): Promise<Reservation> {
-        return await this.reservationModel.findById(id);
+        return await this.reservationModel.findById(id)
+        .populate('patient', 'name')
+        .populate('clinic', 'name')        
+        ;
     }
     async updateById(id: string, updateDto: UpdateReservationDto | DelayReservationDto) {
         return await this.reservationModel.findByIdAndUpdate(id, updateDto, {

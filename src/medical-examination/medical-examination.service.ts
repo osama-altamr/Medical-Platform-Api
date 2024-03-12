@@ -15,7 +15,9 @@ export class MedicalExaminationService {
 
     ) { }
     async findById(id: string): Promise<MedicalExamination> {
-        return await this.medicalExaminationModel.findById(id).populate('patient');
+        return await this.medicalExaminationModel.findById(id)
+            .populate('patient', 'name')
+            .populate('doctor', 'name');
     }
     async findAll(): Promise<MedicalExamination[]> {
         return await this.medicalExaminationModel.find();

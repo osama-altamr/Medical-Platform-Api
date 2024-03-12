@@ -70,7 +70,9 @@ export class PaymentService {
         return await this.paymentModel.find();
     }
     async findById(id: string): Promise<Payment> {
-        return await this.paymentModel.findById(id);
+        return await this.paymentModel.findById(id)
+            .populate('medical_examination', 'price')
+            ;
     }
 }
 

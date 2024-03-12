@@ -28,6 +28,7 @@ export class CenterController {
   @Get()
   @UseGuards(JwtGuard, RolesGuard)
   @Roles('manager', 'patient', 'user')
+
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all centers' })
   @ApiQuery({ name: 'page', required: false, description: 'Page number for pagination' })
@@ -50,7 +51,10 @@ export class CenterController {
   }
 
   @Get(":id")
+  @UseGuards(JwtGuard, RolesGuard)
+  @Roles('admin', 'patient')
   @ApiOperation({ summary: 'Get a center by ID' })
+  @ApiBearerAuth()
 
   @ApiParam({
     name: 'id',
@@ -69,7 +73,7 @@ export class CenterController {
 
   @Patch(":id")
   @UseGuards(JwtGuard, RolesGuard)
-  @Roles('manager')
+  @Roles('admin')
   @ApiBearerAuth()
   @ApiOperation({
     summary: 'Update a center by ID ',
@@ -99,7 +103,7 @@ export class CenterController {
 
   @Delete(":id")
   @UseGuards(JwtGuard, RolesGuard)
-  @Roles('manager', 'admin')
+  @Roles('admin')
   @ApiBearerAuth()
   @ApiOperation({
     summary: 'Delete a center by ID ',
@@ -124,7 +128,7 @@ export class CenterController {
 
   @Post()
   @UseGuards(JwtGuard, RolesGuard)
-  @Roles('admin', 'mangaer')
+  @Roles('admin')
   @ApiBody({
     description: 'Center creation payload',
     type: CreateCenterDto,
@@ -134,6 +138,7 @@ export class CenterController {
     description: 'The center has been successfully created.',
     type: CreateCenterDto,
   })
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Create a new center',
   })

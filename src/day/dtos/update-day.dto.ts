@@ -1,5 +1,5 @@
-import { PartialType } from "@nestjs/mapped-types";
+import { PartialType } from "@nestjs/swagger";
 import { CreateDayDto } from "./create-day.dto";
 
 
-export class UpdateDayDto extends PartialType(CreateDayDto){}
+export class UpdateDayDto extends PartialType(CreateDayDto) { }

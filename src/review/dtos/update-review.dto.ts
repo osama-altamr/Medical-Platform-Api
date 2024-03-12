@@ -1,5 +1,4 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { CreateCenterDto } from "src/center/dtos/create-center.dto";
+import { PartialType } from "@nestjs/swagger";
 import { CreateReviewDto } from "./create-review.dto";
 
 

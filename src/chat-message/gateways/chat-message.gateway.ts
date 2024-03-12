@@ -1,13 +1,9 @@
-import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import {  OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server } from "socket.io";
 import { ChatMessageService } from "../chat-message.service";
-import { UserService } from "src/user/user.service";
 import { CreateChatMessageDto } from "../dtos/create-chat-message.dto";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
 import { Socket } from "socket.io";
 import { ConversationService } from "src/conversation/conversation.service";
-
 
 
 @WebSocketGateway({
@@ -21,7 +17,6 @@ export class ChatMessageGateway implements OnGatewayConnection, OnGatewayDisconn
     ) { }
 
     @WebSocketServer() server: Server;
-
     handleDisconnect(client: any) {
         const userId = client.handshake.query.userId;
         this.userSocketMap.delete(userId);

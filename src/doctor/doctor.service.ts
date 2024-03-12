@@ -23,7 +23,9 @@ export class DoctorService {
             .skip(paginationParams.offset).sort({ ...createSortingObject(sortingParams) });
     }
     async findById(id: string): Promise<Doctor> {
-        return this.doctorModel.findById(id);
+        return this.doctorModel.findById(id)
+        .populate('clinics', 'name specialization')
+        .populate('centers','manager name');
     }
     async updateById(id: string, updateDoctorDto: UpdateDoctorDto | UpdateDoctorRatingsDto) {
         return await this.doctorModel.findByIdAndUpdate(id, updateDoctorDto, {

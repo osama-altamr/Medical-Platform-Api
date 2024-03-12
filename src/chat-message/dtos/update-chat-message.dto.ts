@@ -1,10 +1,16 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { CreateChatMessageDto } from "./create-chat-message.dto";
+
+import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
 
 
 
 export class UpdateChatMessageDto {
+
+    @ApiProperty({
+        description: 'The updated message content.',
+        type: String,
+        example: 'Hello, how are you?',
+    })
     @IsString()
     message: string
 }
